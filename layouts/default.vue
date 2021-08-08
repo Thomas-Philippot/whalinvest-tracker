@@ -10,6 +10,11 @@
         Whalinvest tracker
       </v-toolbar-title>
       <v-spacer />
+      <v-btn icon class="mx-2" @click="toggleTheme">
+        <v-icon>
+          {{ ($vuetify.theme.dark) ? 'fa-sun' : 'fa-moon' }}
+        </v-icon>
+      </v-btn>
       <v-chip class="transparent py-5">
         Hi, Thomas
         <v-avatar size="12" class="ml-2">
@@ -68,6 +73,18 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'Vuetify.js'
+    }
+  },
+  mounted () {
+    const theme = localStorage.getItem('useDarkTheme')
+    if (theme) {
+      this.$vuetify.theme.dark = theme === 'true'
+    }
+  },
+  methods: {
+    toggleTheme () {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+      localStorage.setItem('useDarkTheme', this.$vuetify.theme.dark.toString())
     }
   }
 }
