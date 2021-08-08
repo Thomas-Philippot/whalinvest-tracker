@@ -1,5 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 import fr from 'vuetify/lib/locale/fr'
+require('dotenv').config()
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -46,7 +47,7 @@ export default {
     '@nuxtjs/axios'
   ],
   axios: {
-    baseURL: 'http://localhost:8080/'
+    baseURL: process.env.API_URL
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
