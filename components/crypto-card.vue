@@ -81,12 +81,18 @@ export default {
         const lastTrade = response.data
         this.buyPrice = lastTrade.price
         this.buyQty = lastTrade.origQty
-        this.$axios.get(`/price/${this.name}`).then((response) => {
+        this.$axios.get(`/prices/${this.name}`).then((response) => {
           this.currentPrice = response.data.price
           this.currentPol = ((this.currentPrice * this.buyQty) - (this.buyQty * this.buyPrice)).toFixed(2)
           this.loading = false
+        }).catch((e) => {
+          // eslint-disable-next-line no-console
+          console.log(e)
         })
       }
+    }).catch((e) => {
+      // eslint-disable-next-line no-console
+      console.log(e)
     })
   },
   methods: {

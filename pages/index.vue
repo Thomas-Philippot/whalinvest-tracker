@@ -14,9 +14,16 @@ export default {
     return {
       bots: [
         'AXSBUSD',
-        'EGLDUSDT',
-        'ETCUSDT',
+        'AVAXBUSD',
         'VETBUSD',
+        'DOTBUSD',
+        'LINKBUSD',
+        'XLMBUSD',
+        'ATMUSDT',
+        'EGLDUSDT',
+        'AVAXUSDT',
+        'NKNUSDT',
+        'ETCUSDT',
         'FTMUSDT'
       ]
     }
