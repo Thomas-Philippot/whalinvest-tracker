@@ -1,47 +1,85 @@
 <template>
-  <v-skeleton-loader
-    :loading="loading"
-    type="card"
-  >
-    <v-card rounded="lg">
-      <v-card-text class="text-center">
-        <v-row>
-          <v-col>
-            <v-img :src="getIcon(ticker)" height="50" contain />
-          </v-col>
-        </v-row>
-        <v-row class="mb-8">
-          <v-col>
-            <span class="subtitle-1">{{ name }}</span>
-            <h3 v-if="waiting" class="my-5 font-weight-bold text-sm-caption">
-              En attente d'une oportunité d'achat
-            </h3>
-            <h3 v-else class="font-weight-bold text-lg-h4" :class="(currentPol > 0 ? 'success--text' : 'error--text')">
-              {{ currentPol + '$' }}
-            </h3>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-chip
-              v-if="!waiting"
-              class="ma-2"
-              :color="(currentPol > 0 ? 'success' : 'error')"
-              outlined
-            >
-              <v-icon left>
-                fa-long-arrow-alt-up
+  <div>
+    <v-skeleton-loader
+      :loading="loading"
+      type="card"
+    >
+      <v-card rounded="lg" class="crypto-card" @contextmenu="showMenu">
+        <v-card-text class="text-center">
+          <v-row>
+            <v-col class="mt-2">
+              <v-img
+                :src="getIcon(ticker)"
+                lazy-src=""
+                height="50"
+                contain
+              >
+                <template #placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    />
+                  </v-row>
+                </template>
+              </v-img>
+            </v-col>
+          </v-row>
+          <v-row class="mb-8">
+            <v-col>
+              <span class="subtitle-1">{{ name }}</span>
+              <h3 v-if="waiting" class="my-5 font-weight-bold text-sm-caption">
+                En attente d'une oportunité d'achat
+              </h3>
+              <h3 v-else class="font-weight-bold text-lg-h4" :class="(currentPol > 0 ? 'success--text' : 'error--text')">
+                {{ currentPol + '$' }}
+              </h3>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-chip
+                v-if="!waiting"
+                class="ma-2"
+                :color="(currentPol > 0 ? 'success' : 'error')"
+                outlined
+              >
+                <v-icon left>
+                  fa-long-arrow-alt-up
+                </v-icon>
+                {{ percentile }}
+              </v-chip>
+              <v-icon v-else>
+                fa-spinner fa-spin
               </v-icon>
-              {{ percentile }}
-            </v-chip>
-            <v-icon v-else>
-              fa-spinner fa-spin
-            </v-icon>
-          </v-col>
-        </v-row>
-      </v-card-text>
-    </v-card>
-  </v-skeleton-loader>
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
+    </v-skeleton-loader>
+    <v-menu
+      v-model="menu"
+      :position-x="x"
+      :position-y="y"
+      absolute
+      offset-y
+    >
+      <v-list>
+        <v-list-item @click="handleDeleteBot">
+          <v-list-item-icon>
+            <v-icon>fa-trash</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Supprimer</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+  </div>
 </template>
 
 <script>
@@ -59,6 +97,9 @@ export default {
   },
   data () {
     return {
+      menu: false,
+      x: 0,
+      y: 0,
       loading: true,
       waiting: false,
       buyPrice: null,
@@ -97,12 +138,26 @@ export default {
   },
   methods: {
     getIcon (ticker) {
-      return `https://cryptoicons.org/api/icon/${ticker}/200`
+      return `https://icons.bitbot.tools/api/${ticker}/128x128`
+    },
+    handleDeleteBot () {
+      this.$emit('delete-bot', this.name)
+    },
+    showMenu (e) {
+      e.preventDefault()
+      this.menu = false
+      this.x = e.clientX
+      this.y = e.clientY
+      this.$nextTick(() => {
+        this.menu = true
+      })
     }
   }
 }
 </script>
 
 <style scoped>
-
+.crypto-card {
+  min-height: 300px;
+}
 </style>

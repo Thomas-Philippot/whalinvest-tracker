@@ -3,6 +3,7 @@
     <v-app-bar
       :fixed="false"
       app
+      hide-on-scroll
       class="ma-4 rounded-lg"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
@@ -16,11 +17,13 @@
         </v-icon>
       </v-btn>
       <v-chip class="transparent py-5">
-        Hi, Thomas
+        <div class="d-none d-md-block">
+          Hi, Thomas
+        </div>
         <v-avatar size="12" class="ml-2">
           <img
             src="https://cdn.vuetifyjs.com/images/john.jpg"
-            alt="John"
+            alt="User"
           >
         </v-avatar>
       </v-chip>
