@@ -16,6 +16,7 @@
     "core-js": "^3.15.1",
     "dotenv": "^10.0.0",
     "nuxt": "^2.15.7",
+    "vue-flip": "^1.0.2",
     "vuetify": "^2.5.5",
     "vuex-persistedstate": "^4.0.0"
   },

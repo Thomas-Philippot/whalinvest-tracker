@@ -1,10 +1,35 @@
 <template>
   <div>
     <v-skeleton-loader
-      :loading="loading"
+      :loading="false"
       type="card"
     >
       <v-card rounded="lg" class="crypto-card" @contextmenu="showMenu">
+        <v-app-bar flat dense elevation="0">
+          <v-spacer />
+          <v-menu offset-y>
+            <v-list>
+              <v-list-item @click="handleDeleteBot">
+                <v-list-item-icon>
+                  <v-icon>fa-trash</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>Supprimer</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+            <template #activator="{ on, attrs }">
+              <v-btn
+                color="white"
+                icon
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>fa-ellipsis-v</v-icon>
+              </v-btn>
+            </template>
+          </v-menu>
+        </v-app-bar>
         <v-card-text class="text-center">
           <v-row>
             <v-col class="mt-2">
@@ -61,24 +86,6 @@
         </v-card-text>
       </v-card>
     </v-skeleton-loader>
-    <v-menu
-      v-model="menu"
-      :position-x="x"
-      :position-y="y"
-      absolute
-      offset-y
-    >
-      <v-list>
-        <v-list-item @click="handleDeleteBot">
-          <v-list-item-icon>
-            <v-icon>fa-trash</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>Supprimer</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-menu>
   </div>
 </template>
 
@@ -142,15 +149,6 @@ export default {
     },
     handleDeleteBot () {
       this.$emit('delete-bot', this.name)
-    },
-    showMenu (e) {
-      e.preventDefault()
-      this.menu = false
-      this.x = e.clientX
-      this.y = e.clientY
-      this.$nextTick(() => {
-        this.menu = true
-      })
     }
   }
 }
