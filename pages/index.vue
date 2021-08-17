@@ -59,17 +59,8 @@ export default {
       this.newBotName = null
       this.dialog = false
     },
-    deleteBot (value) {
-      this.$store.commit('delete')
-    },
-    showMenu (e) {
-      e.preventDefault()
-      this.menu = false
-      this.x = e.clientX
-      this.y = e.clientY
-      this.$nextTick(() => {
-        this.menu = true
-      })
+    deleteBot (name) {
+      this.$store.commit('delete', name)
     }
   }
 }

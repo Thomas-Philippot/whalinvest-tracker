@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-skeleton-loader
-      :loading="false"
+      :loading="loading"
       type="card"
     >
-      <v-card rounded="lg" class="crypto-card" @contextmenu="showMenu">
+      <v-card rounded="lg" class="crypto-card">
         <v-app-bar flat dense elevation="0">
           <v-spacer />
           <v-menu offset-y>
